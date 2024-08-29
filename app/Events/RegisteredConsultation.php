@@ -2,8 +2,8 @@
 
 namespace App\Events;
 
-use App\Models\Consulta;
-use App\Models\Paciente;
+use App\Http\Resources\PatientResource;
+use App\Models\Consultation;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -12,7 +12,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ConsultaCadastrada implements ShouldBroadcast
+class RegisteredConsultation implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,10 +20,8 @@ class ConsultaCadastrada implements ShouldBroadcast
      * Create a new event instance.
      */
     public function __construct(
-        public Consulta $consulta,
-        public Paciente $paciente
-    )
-    { }
+        public Consultation $consultation,
+    ) {}
 
     /**
      * Get the channels the event should broadcast on.
@@ -32,11 +30,6 @@ class ConsultaCadastrada implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('atualizacoes-do-paciente-' . $this->consulta->paciente->id);
-    }
-
-    public function broadcastAs()
-    {
-        return 'consulta-cadastrada';
+        return new Channel('atualizacoes-do-paciente-' . $this->consultation->patient->id);
     }
 }
