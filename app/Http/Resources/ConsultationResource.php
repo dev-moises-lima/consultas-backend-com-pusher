@@ -23,7 +23,9 @@ class ConsultationResource extends JsonResource
             'respiratoryRate' => $this->respiratoryRate,
             'temperature' => $this->temperature,
             'symptoms' => json_decode($this->symptoms),
+            'percentageOfSymptomsFelt' => $this->percentageOfSymptomsFelt,
             'patient_id' => $this->patient_id,
+            'created_at' => $this->created_at
         ];
     }
 }
