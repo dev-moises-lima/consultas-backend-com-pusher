@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Http\Resources\ConsultationResource;
 use App\Http\Resources\PatientResource;
 use App\Models\Consultation;
 use Illuminate\Broadcasting\Channel;
@@ -20,7 +21,7 @@ class RegisteredConsultation implements ShouldBroadcast
      * Create a new event instance.
      */
     public function __construct(
-        public Consultation $consultation,
+        public ConsultationResource $consultation,
     ) {}
 
     /**
@@ -30,6 +31,6 @@ class RegisteredConsultation implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('atualizacoes-do-paciente-' . $this->consultation->patient->id);
+        return new Channel('patient-updates-' . $this->consultation->patient_id);
     }
 }

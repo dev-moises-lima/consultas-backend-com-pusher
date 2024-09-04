@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\PatientRegistered;
 use App\Http\Requests\PatientStoreRequest;
+use App\Http\Resources\ConsultationResource;
 use App\Http\Resources\PatientResource;
 use Illuminate\Http\Request;
 use App\Models\Patient;
@@ -46,6 +47,6 @@ class PatientController extends Controller
     public function consultations(Patient $patient) {
         $consultations = $patient->consultations;
 
-        return response()->json($consultations);
+        return ConsultationResource::collection($consultations);
     }
 }

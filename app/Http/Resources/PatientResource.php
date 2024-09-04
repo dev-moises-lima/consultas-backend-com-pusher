@@ -14,7 +14,7 @@ class PatientResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $lastConsutation = $this->consultations()->first();
+        $lastConsutation = $this->consultations()->latest()->first();
 
         return [
             "id" => $this->id,

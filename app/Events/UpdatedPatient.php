@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\Patient;
+use App\Http\Resources\PatientResource;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -19,7 +19,7 @@ class UpdatedPatient implements ShouldBroadcast
      * Create a new event instance.
      */
     public function __construct(
-        public Patient $patient
+        public PatientResource $patient
     ) {}
 
     /**
@@ -32,10 +32,5 @@ class UpdatedPatient implements ShouldBroadcast
         return [
             new Channel('main-updates'),
         ];
-    }
-
-    public function broadcastAs()
-    {
-        return 'updated-patient';
     }
 }
