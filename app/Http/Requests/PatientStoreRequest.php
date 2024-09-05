@@ -24,13 +24,13 @@ class PatientStoreRequest extends FormRequest
     public function rules(): array
     {
         date_default_timezone_set("America/Sao_Paulo");
-        $data = date('Y-m-d');
+        $date = date('Y-m-d');
 
         return [
             'name' => 'required|string|min:1',
-            'cpf' => ['required', 'unique:patients,cpf', new Cpf],
-            'dateOfBirth' => "date|before:$data|required",
-            'telephone' => 'string|required',
+            'cpf' => ['required', 'unique:patients,cpf', "cpf"],
+            'dateOfBirth' => "date|before:$date|required",
+            'telephone' => 'string|celular_com_ddd|required',
             'photo' => ['file', 'required', new Foto],
         ];
     }

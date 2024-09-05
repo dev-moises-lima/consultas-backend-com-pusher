@@ -9,7 +9,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('consultation/{patient}', [ConsultationController::class, 'store']);
 
 Route::prefix('patients')->group(function () {
     Route::controller(PatientController::class)->group(function () {
@@ -18,4 +17,5 @@ Route::prefix('patients')->group(function () {
         Route::get('/{patient}', 'show');
         Route::get('/{patient}/consultations', 'consultations');
     });
+    Route::post('/{patient}/consultations', [ConsultationController::class, 'store']);
 });

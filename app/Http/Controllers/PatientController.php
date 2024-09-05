@@ -16,19 +16,19 @@ class PatientController extends Controller
 
     public function store(PatientStoreRequest $request)
     {
-        $dados = $request->safe()->except(['photo']);
+        $data = $request->safe()->except(['photo']);
 
-        $extensaoDaFoto = $request->photo->getClientOriginalExtension();
-        $caminhoDaFoto = $request->photo->path();
+        $extensionOfPhoto = $request->photo->getClientOriginalExtension();
+        $photoPath = $request->photo->path();
 
-        $imagemManager = ImageManager::gd()->read($caminhoDaFoto);
+        $imagemManager = ImageManager::gd()->read($photoPath);
         $imagemManager->cover(300, 300);
-        $nomeDaFoto = uniqid() . '.' . $extensaoDaFoto;
-        $imagemManager->save(storage_path("app/public/photos/$nomeDaFoto"));
+        $photoName = uniqid() . '.' . $extensionOfPhoto;
+        $imagemManager->save(storage_path("app/public/photos/$photoName"));
 
-        $dados['photo'] = $nomeDaFoto;
+        $data['photo'] = $photoName;
 
-        $patient = Patient::create($dados);
+        $patient = Patient::create($data);
         $patientResource = new PatientResource($patient);
 
         broadcast(new PatientRegistered($patientResource))->toOthers();

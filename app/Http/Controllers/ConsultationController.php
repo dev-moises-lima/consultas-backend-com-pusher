@@ -15,9 +15,9 @@ class ConsultationController extends Controller
 {
     public function store(ConsultationStoreRequest $request, Patient $patient)
     {
-        $dados = $request->validated();
+        $data = $request->validated();
 
-        $symptoms = json_decode($dados['symptoms'], true);
+        $symptoms = json_decode($data['symptoms'], true);
         $percentageOfSymptomsFelt = count($symptoms) / 14 * 100;
 
         $patientCondition = match(true) {
@@ -26,13 +26,13 @@ class ConsultationController extends Controller
             default => 'Possível infectado'
         };
 
-        $dados['condition'] = $patientCondition;
-        $dados['patient_id'] = $patient->id;
-        $dados['percentageOfSymptomsFelt'] = $percentageOfSymptomsFelt;
+        $data['condition'] = $patientCondition;
+        $data['patient_id'] = $patient->id;
+        $data['percentageOfSymptomsFelt'] = round($percentageOfSymptomsFelt, 1);
 
-        $consultation = Consultation::create($dados);
-
-        broadcast(new RegisteredConsultation(new ConsultationResource($consultation), new PatientResource($patient)))->toOthers();
+        $consultation = Consultation::create($data);
+        
+        broadcast(new RegisteredConsultation(new ConsultationResource($consultation)))->toOthers();
         broadcast(new UpdatedPatient(new PatientResource($patient)))->toOthers();
 
         return new ConsultationResource($consultation);
