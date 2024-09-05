@@ -29,7 +29,7 @@ class PatientStoreRequest extends FormRequest
         return [
             'name' => 'required|string|min:1',
             'cpf' => 'required|unique:patients,cpf|cpf',
-            'dateOfBirth' => 'date|before:$date|required',
+            'dateOfBirth' => "date|before:$date|required",
             'telephone' => 'string|celular_com_ddd|required',
             'photo' => 'image|required',
         ];
