@@ -2,7 +2,8 @@
 
 namespace App\Events;
 
-use App\Models\Paciente;
+use App\Http\Resources\PatientResource;
+use App\Models\Patient;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -11,7 +12,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class PacienteCadastrado implements ShouldBroadcast
+class PatientRegistered implements ShouldBroadcast
 {
     use Dispatchable, SerializesModels, InteractsWithSockets;
 
@@ -19,7 +20,7 @@ class PacienteCadastrado implements ShouldBroadcast
      * Create a new event instance.
      */
     public function __construct(
-        public Paciente $paciente
+        public PatientResource $patient
     ) {}
 
     /**
@@ -29,11 +30,6 @@ class PacienteCadastrado implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('atualizacoes-gerais');
-    }
-
-    public function broadcastAs()
-    {
-        return 'paciente-cadastrado';
+        return new Channel('main-updates');
     }
 }

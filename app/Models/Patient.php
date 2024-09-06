@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Paciente extends Model
+class Patient extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'cpf', 'telefone', 'data_de_nascimento', 'foto'];
+    protected $fillable = ['name', 'cpf', 'telephone', 'dateOfBirth', 'photo'];
 
-    public function consultas() : HasMany
+    public function consultations() : HasMany
     {
-        return $this->hasMany(Consulta::class);
+        return $this->hasMany(Consultation::class);
     }
 }

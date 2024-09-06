@@ -6,7 +6,7 @@ use App\Rules\Cpf;
 use App\Rules\Foto;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PacienteStoreRequest extends FormRequest
+class PatientStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,14 @@ class PacienteStoreRequest extends FormRequest
     public function rules(): array
     {
         date_default_timezone_set("America/Sao_Paulo");
-        $data = date('Y-m-d');
+        $date = date('Y-m-d');
 
         return [
-            'nome' => 'required|string|min:1',
-            'cpf' => ['required', 'unique:pacientes,cpf', new Cpf],
-            'data_de_nascimento' => "date|before:$data|required",
-            'telefone' => 'string|required',
-            'foto' => ['file', 'required', new Foto],
+            'name' => 'required|string|min:1',
+            'cpf' => 'required|unique:patients,cpf|cpf',
+            'dateOfBirth' => "date|before:$date|required",
+            'telephone' => 'string|celular_com_ddd|required',
+            'photo' => 'image|required',
         ];
     }
 }
